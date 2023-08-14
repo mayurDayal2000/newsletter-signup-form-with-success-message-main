@@ -67,14 +67,16 @@ button {
   padding: 2.25rem 1.5rem 2.5rem;
 }
 
-.form-content h1 {
+.form-content h1,
+.success-section h2 {
   font-size: 2.375rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   margin-bottom: 1.25rem;
 }
 
-.form-content p {
+.form-content p,
+.success-section p {
   font-size: 1rem;
 }
 
@@ -141,7 +143,8 @@ button {
   background-color: var(--red-200);
 }
 
-.signup-form button {
+.signup-form button,
+.success-section button {
   width: 100%;
   padding: 1.125rem;
   background-color: var(--slate-800);
@@ -152,10 +155,41 @@ button {
 }
 
 .signup-form button:hover,
+.success-section button:hover,
 .signup-form button:focus,
-.signup-form button:active {
+.success-section button:focus,
+.signup-form button:active,
+.success-section button:active {
   background-color: var(--red-400);
   box-shadow: 0px 10px 10px 0px rgba(254, 202, 202, 1);
+}
+
+.success-section {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--white);
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.success-content {
+  flex: 1 1 100%;
+  margin: 9rem 0 0;
+}
+
+.success-section img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.success-section h2 {
+  margin: 2.4rem 0 1.25rem;
+}
+
+.success-section span {
+  font-weight: 700;
 }
 
 @media (min-width: 640px) {
@@ -167,6 +201,19 @@ button {
 @media (min-width: 768px) {
   body {
     justify-content: center;
+  }
+
+  .success-section {
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 1rem;
+    padding: 2.5rem 3rem;
+  }
+
+  .success-content {
+    margin: 0;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -202,4 +249,45 @@ button {
   .form-content h1 {
     font-size: 3.4rem;
   }
+
+  .success-section {
+    border-radius: 2rem;
+  }
+}
+
+/* smooth transition effects */
+.wrapper {
+  position: relative;
+}
+
+.success-section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  transition: transform ease-in 450ms, opacity ease-in 450ms;
+}
+
+.swipe-fwd .signup-section {
+  transform: translateX(-100%) rotate(-90deg);
+  transition: transform ease-in 350ms, opacity ease-in 350ms;
+  opacity: 0;
+}
+
+.swipe-fwd .success-section {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  z-index: 0;
+}
+
+.swipe-bwd .signup-section {
+  transform: translateX(0%) rotate(0deg);
+  transition: transform ease-in 350ms, opacity ease-in 350ms;
+  opacity: 1;
+}
+
+.success-section,
+.swipe-bwd .success-section {
+  transform: translate(-50%, -1000%);
+  opacity: 0;
 }

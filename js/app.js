@@ -1,39 +1,35 @@
 const signupForm = document?.getElementById("signup-form");
+const userEmailOutput = document?.getElementById("user-email");
+const mainWrapper = document.querySelector("main.wrapper");
+const dismissBtn = document.querySelector(".success-section button");
+const emailPattern =
+  /^[a-zA-Z0-9_.%+-]+@[a-zA-Z0-9]+\.(com|org|net|edu|gov|mil|info|biz|co|io|me|tv|in)$/;
 
-/*
- * Validates an email address entered in a signup form.
- *
- * @param {string} emailFound - The email address to validate.
- * @returns {boolean} - True if the email address is valid, false otherwise.
- */
-const validateEmail = (emailFound) => {
-  const emailPattern =
-    /^[a-zA-Z0-9_.%+-]+@[a-zA-Z0-9]+\.(com|org|net|edu|gov|mil|info|biz|co|io|me|tv|in)$/;
-
-  return emailPattern.test(emailFound);
-};
-
-const submitForm = () => {
+const displayUserEmail = () => {
   if (!signupForm.classList.contains("warning")) {
-    console.log("form is ready to get submitted");
+    userEmailOutput.textContent = signupForm.email.value;
+    mainWrapper.classList.remove("swipe-bwd");
+    mainWrapper.classList.add("swipe-fwd");
   }
 };
 
-const handleInput = (event) => {
-  const emailFound = event.target.value.trim();
+const handleEmailInput = (event) => {
+  const enteredEmail = event.target.value.trim();
+  const isValidEmail = enteredEmail === "" || emailPattern.test(enteredEmail);
 
-  if (emailFound === "" || validateEmail(emailFound)) {
-    signupForm.classList.remove("warning");
-    event.target.setCustomValidity("");
-  } else {
-    signupForm.classList.add("warning");
-    event.target.setCustomValidity("valid email required");
-  }
+  signupForm.classList.toggle("warning", !isValidEmail);
+  event.target.setCustomValidity(isValidEmail ? "" : "valid email required");
 };
 
 signupForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  submitForm();
+  displayUserEmail();
 });
 
-signupForm.addEventListener("input", handleInput);
+signupForm.addEventListener("input", handleEmailInput);
+
+dismissBtn.addEventListener("click", () => {
+  mainWrapper.classList.add("swipe-bwd");
+  mainWrapper.classList.remove("swipe-fwd");
+  signupForm.reset();
+});
